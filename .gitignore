@@ -2,3 +2,5 @@
 *.iml
 .vscode/
 .fleet/
+
+.DS_Store
