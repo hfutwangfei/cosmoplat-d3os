@@ -18,6 +18,13 @@ Cloudhall123
 registry-edge.cosmoplat.com/cloud-hall/cloud-hall:v0.2
 ```
 
+> 版本`registry-edge.cosmoplat.com/cloud-hall/cloud-hall:v0.2.1`
+> > 对于该版本, 只需启动镜像并进入容器，更新源、安装`redis`、启动`redis-server`、启动`cloud-hall`即可
+> >
+> > helm部署时，需开启`8096`端口
+
+以下步骤基于版本`registry-edge.cosmoplat.com/cloud-hall/cloud-hall:v0.2`
+
 ## 运行镜像，进入容器
 
 ```shell
@@ -25,6 +32,13 @@ docker run --name -p 8096:8096 cloud-hall -d 3a1ca885e154
 docker exec -it 101a5abc0fe2 /bin/bash
 ```
 
+## 更新源
+
+将./jar/sources.list替换容器内的/etc/apt/sources.list
+
+```shell
+cp /opt/sources.list /etc/apt/
+```
 
 ## 容器中启动redis-server
 

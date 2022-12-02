@@ -1,8 +1,8 @@
 IMAGE_ADDRESS ?= registry-edge.cosmoplat.com
-IMAGE_PROJECT ?= d3os
+IMAGE_PROJECT ?= cloud-hall
 
-IMAGE_NAME ?= mysql-cloud-hall
-IMAGE_VERSION ?= v0.1.0
+IMAGE_NAME ?= cloud-hall
+IMAGE_VERSION ?= v0.2.1
 
 CHART_NAME ?= ${IMAGE_NAME}
 CHART_VERSION ?= 0.1.0
@@ -109,5 +109,5 @@ chart: create-chart sed-chart add-env package-chart
 
 clean:
 	rm -rf ${IMAGE_NAME}
-	rm -rf ${IMAGE_NAME}-*.tgz
+	#rm -rf ${IMAGE_NAME}-*.tgz
 	rm -rf _output
