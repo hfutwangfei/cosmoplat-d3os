@@ -4,3 +4,7 @@
 .fleet/
 
 .DS_Store
+
+*.jar
+*.tar
+*.tgz
