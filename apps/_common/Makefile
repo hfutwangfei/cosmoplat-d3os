@@ -10,6 +10,8 @@ IMAGE_VERSION ?= v0.1.1
 CHART_VERSION ?= 0.1.0
 # todo: to be added as helm chart project
 CHART_NAME ?= nginx
+# todo: to be added as chart description
+CHART_DESC ?= "nginx"
 
 # helm create
 create-chart:
@@ -22,7 +24,7 @@ SED_TAG ?= "s/tag: \"\"/tag: \"${IMAGE_VERSION}\"/g"
 PORT ?= 80
 SED_PORT ?= "s/port: 80/port: ${PORT}/g"
 # helm chart description
-SED_DESC ?= "s/description: A Helm chart for Kubernetes/description: ${CHART_NAME}/g"
+SED_DESC ?= "s/description: A Helm chart for Kubernetes/description: ${CHART_DESC}/g"
 # helm chart version
 SED_CHART_VERSION ?= "s/version: 0.1.0/version: ${CHART_VERSION}/g"
 # app version
