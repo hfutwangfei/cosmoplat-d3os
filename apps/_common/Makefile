@@ -1,17 +1,20 @@
 # todo: to be added as image repository
+#  such as "registry-edge.cosmoplat.com", with a IMAGE_PROJECT "d3os"
+#  "harbor.etianneng.cn", with a IMAGE_PROJECT "iip"
+#  "registry.cn-hangzhou.aliyuncs.com", with a IMAGE_PROJECT "wangfei-k8s"
 IMAGE_ADDRESS ?= registry-edge.cosmoplat.com
 # todo: to be added as image project
 IMAGE_PROJECT ?= nginx
 # todo: to be added as image name
 IMAGE_NAME ?= nginx
-# todo: to be added as image version
+# todo: to be added as image version, such as v0.1.0
 IMAGE_VERSION ?= v0.1.1
-# todo: to be added as helm chart version
+# todo: to be added as helm chart version, such as 0.1.0
 CHART_VERSION ?= 0.1.0
-# todo: to be added as helm chart project
+# todo: to be added as helm chart project, it can be set same as IMAGE_NAME
 CHART_NAME ?= nginx
-# todo: to be added as chart description
-CHART_DESC ?= "nginx"
+# todo: to be added as chart description, it can be set same as CHART_NAME
+CHART_DESC ?= nginx
 
 # helm create
 create-chart:
@@ -20,7 +23,7 @@ create-chart:
 SED_REPO ?= "s/repository:\ nginx/repository:\ ${IMAGE_ADDRESS}\/${IMAGE_PROJECT}\/${IMAGE_NAME}/g"
 # image version
 SED_TAG ?= "s/tag: \"\"/tag: \"${IMAGE_VERSION}\"/g"
-# server port
+# todo: server port
 PORT ?= 80
 SED_PORT ?= "s/port: 80/port: ${PORT}/g"
 # helm chart description
@@ -126,7 +129,9 @@ ADD_VOLUME_VOLUMEMOUNTS_BEFORE ?= -\ name:\ {{\ .Chart.Name\ }}
 ADD_VOLUME_VOLUMEMOUNTS_AFTER := ${ADD_VOLUME_VOLUMEMOUNTS_BEFORE}
 ADD_VOLUME_VOLUMEMOUNTS_VOLUMEMOUNTS ?= volumeMounts:
 ADD_VOLUME_VOLUMEMOUNTS_NAME ?= -\ name:\ configs
-ADD_VOLUME_VOLUMEMOUNTS_CONFIGMAP ?= mountPath:\ \\/config
+# todo: dir which your configuration filed to be mounted
+#  if the dir is /a/b, then set ADD_VOLUME_VOLUMEMOUNTS_CONFIGMAP := mountPath:\ \/a\/b
+ADD_VOLUME_VOLUMEMOUNTS_CONFIGMAP := mountPath:\ \\/config
 ADD_VOLUME_VOLUMEMOUNTS_AFTER := ${ADD_VOLUME_VOLUMEMOUNTS_AFTER}${ADD_VOLUME_WAP}
 ADD_VOLUME_VOLUMEMOUNTS_AFTER := ${ADD_VOLUME_VOLUMEMOUNTS_AFTER}${ADD_VOLUME_SPACE_10}
 ADD_VOLUME_VOLUMEMOUNTS_AFTER := ${ADD_VOLUME_VOLUMEMOUNTS_AFTER}${ADD_VOLUME_VOLUMEMOUNTS_VOLUMEMOUNTS}
@@ -165,12 +170,14 @@ ADD_VOLUME_CONFIGMAP := ${ADD_VOLUME_CONFIGMAP}heritage:\ \"{{\ .Release.Service
 ADD_VOLUME_CONFIGMAP := ${ADD_VOLUME_CONFIGMAP}${ADD_VOLUME_WAP}
 ADD_VOLUME_CONFIGMAP := ${ADD_VOLUME_CONFIGMAP}data:
 ADD_VOLUME_CONFIGMAP := ${ADD_VOLUME_CONFIGMAP}${ADD_VOLUME_WAP}
-ADD_VOLUME_CONFIGMAP := ${ADD_VOLUME_CONFIGMAP}{{\ \(.Files.Glob\ \"etc\\/*\"\).AsConfig\ \|\ indent\ 2\ }}
+ADD_VOLUME_CONFIGMAP := ${ADD_VOLUME_CONFIGMAP}{{\ \(.Files.Glob\ \"etc/*\"\).AsConfig\ \|\ indent\ 2\ }}
 
 add-volume:
 	sed -i '' ${ADD_VOLUME_VOLUMES} ${CHART_NAME}/templates/deployment.yaml
 	sed -i '' ${ADD_VOLUME_VOLUMEMOUNTS} ${CHART_NAME}/templates/deployment.yaml
 	echo ${ADD_VOLUME_CONFIGMAP} >> ${CHART_NAME}/templates/cm.yaml
+	mkdir ${CHART_NAME}/etc
+	cp etc/* ${CHART_NAME}/etc/
 
 # helm package
 package-chart:
