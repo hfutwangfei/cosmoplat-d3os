@@ -1,0 +1,13 @@
+{{- if .Values.volume.configMapEnabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "nginx.fullname" . }}
+  labels:
+    app: {{ template "nginx.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+data:
+  {{ (.Files.Glob "etc/*").AsConfig | indent 2 }}
+{{- end }}
