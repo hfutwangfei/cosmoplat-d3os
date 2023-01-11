@@ -8,8 +8,10 @@ IMAGE_PROJECT ?= nginx
 # todo: to be added as image name
 IMAGE_NAME ?= nginx
 # todo: to be added as image version, such as v0.1.0
+# todo: ^[v]*(0|[1-9][0-9]*)(.(0|[1-9][0-9]*)){0,}$
 IMAGE_VERSION ?= v0.1.1
 # todo: to be added as helm chart version, such as 0.1.0
+# todo: ^[v]*(0|[1-9][0-9]*)(.(0|[1-9][0-9]*)){0,2}$
 CHART_VERSION ?= 0.1.1
 # todo: to be added as helm chart project, it can be set same as IMAGE_NAME
 CHART_NAME ?= nginx1
